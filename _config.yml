@@ -5,7 +5,7 @@ url: "https://eloisaglez.github.io"
 baseurl: "/AI4Green-Platform_v4"
 
 # --- TEMA ---
-theme: # jekyll-theme-hydejack
+# theme:  jekyll-theme-hydejack
 # remote_theme: hydecorp/hydejack@v9 # Descomenta si usas remote_theme
 
 # --- CONFIGURACIÓN DEL AUTOR ---
