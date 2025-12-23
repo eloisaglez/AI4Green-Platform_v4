@@ -238,7 +238,7 @@
             justify-content: center;
             transition: 0.3s;
             text-decoration: none;
-            color: #333;
+            color: #333 !important;
         }
 
         .btn-icon:hover,
@@ -246,10 +246,10 @@
             background: #f0f0f0;
             border-color: #999;
         }
-        
+
         .btn-icon svg,
         a.btn-icon svg {
-            stroke: #333;
+            stroke: #333 !important;
         }
 
         .breadcrumb {
@@ -442,13 +442,13 @@
 
             <main class="main-content">
                 <div class="content-header">
-                    <button class="btn-icon" onclick="window.location.href='{{ site.baseurl }}/'" title="Back to Home">
+                    <a href="{{ site.baseurl }}/" class="btn-icon" title="Back to Home">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <line x1="3" y1="6" x2="21" y2="6"></line>
                             <line x1="3" y1="12" x2="21" y2="12"></line>
                             <line x1="3" y1="18" x2="21" y2="18"></line>
                         </svg>
-                    </button>
+                    </a>
                     <button class="btn-icon" title="Theme">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <circle cx="12" cy="12" r="5"></circle>
