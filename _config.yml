@@ -1,0 +1,115 @@
+# --- INFORMACIÓN DEL SITIO ---
+title: AI4Green
+description: Empowering Sustainability with AI
+url: "https://eloisa.glez.github.io"
+baseurl: "/AI4Green-Platform_v4"
+
+# --- TEMA ---
+theme: jekyll-theme-hydejack
+# remote_theme: hydecorp/hydejack@v9 # Descomenta si usas remote_theme
+
+# --- CONFIGURACIÓN DEL AUTOR ---
+author:
+  name: AI4Green Team
+  email: contact@ai4green.org
+
+# --- CONFIGURACIÓN DEL MENÚ LATERAL ---
+menu:
+  - title: Home
+    url: /
+  - title: Materials
+    url: /materials/
+  - title: Project
+    url: /project/
+  - title: Team
+    url: /team/
+
+# --- CONFIGURACIÓN DE HYDEJACK ---
+hydejack:
+  # Modo de navegación especial (drawer)
+  no_drawer: false
+  no_navbar: false
+  no_search: false
+  no_inline_css: false
+  no_page_style: false
+  no_break_layout: true
+  no_toc: false
+  no_third_column: false
+  no_large_headings: false
+  no_structured_data: false
+  no_breadcrumbs: false
+  use_lsi: true
+  cookies_banner: false
+  advertise: false
+  hide_dates: false
+  hide_last_modified: false
+  
+  # Configuración personalizada
+  post_addons: [about, newsletter, related, random, comments]
+  
+  # Colores personalizados
+  accent_image: 
+    background: 'linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.5)), url(https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&q=80)'
+    overlay: true
+  accent_color: rgb(254, 193, 7)
+  theme_color: rgb(10, 79, 79)
+
+# --- REDES SOCIALES ---
+social:
+  name: AI4Green
+  links:
+    - https://github.com/eloisa-glez/AI4Green-Platform_v4
+
+# --- CONFIGURACIÓN DE JEKYLL ---
+permalink: /:categories/:year-:month-:day-:title/
+paginate: 10
+paginate_path: /page:num/
+
+# --- COLECCIONES ---
+collections:
+  materials:
+    output: true
+    permalink: /materials/:name/
+
+# --- PLUGINS ---
+plugins:
+  - jekyll-default-layout
+  - jekyll-feed
+  - jekyll-optional-front-matter
+  - jekyll-paginate
+  - jekyll-readme-index
+  - jekyll-redirect-from
+  - jekyll-relative-links
+  - jekyll-seo-tag
+  - jekyll-sitemap
+  - jekyll-titles-from-headings
+  - jekyll-include-cache
+
+# --- MARKDOWN ---
+markdown: kramdown
+kramdown:
+  math_engine: katex
+  math_engine_opts: {}
+  footnote_backlink: '&#x21a9;&#xfe0e;'
+
+# --- EXCLUSIONES ---
+exclude:
+  - .jekyll-cache
+  - .sass-cache
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor/bundle/
+  - vendor/cache/
+  - vendor/gems/
+  - vendor/ruby/
+  - README.md
+
+# --- INCLUDES ---
+include:
+  - .well-known
+  - LICENSE.md
+
+# --- CONFIGURACIÓN DE SASS ---
+sass:
+  style: compressed
