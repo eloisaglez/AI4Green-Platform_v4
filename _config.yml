@@ -1,0 +1,53 @@
+title: AI4Green
+description: Empowering Sustainability with AI
+
+# URL Settings
+url: "https://eloisaglez.github.io"
+baseurl: "/AI4Green-Platform_v4"
+
+# Author
+author:
+  name: IES Innovación Verde
+  email: innovacionverde@educa.madrid.org
+
+# Menu Navigation
+menu:
+  - title: Home
+    url: /
+  - title: Platform
+    url: /platform/
+  - title: Partners
+    url: /partners/
+  - title: Team
+    url: /team/
+
+# Social Links
+social:
+  links:
+    - https://github.com/eloisaglez/AI4Green-Platform_v4
+
+# Build settings
+markdown: kramdown
+permalink: pretty
+
+# Collections
+collections:
+  materials:
+    output: true
+    permalink: /materials/:name/
+
+# Plugins
+plugins:
+  - jekyll-feed
+  - jekyll-paginate
+  - jekyll-seo-tag
+  - jekyll-sitemap
+
+# Exclude
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor
+  - .sass-cache
+  - .jekyll-cache
