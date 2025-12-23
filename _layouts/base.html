@@ -225,24 +225,27 @@
             border-bottom: 1px solid #e0e0e0;
         }
 
-        .btn-icon {
-            background: none;
-            border: 1px solid #ddd;
-            width: 40px;
-            height: 40px;
-            border-radius: 4px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: 0.3s;
-        }
+       .btn-icon,
+        a.btn-icon {
+        background: none;
+        border: 1px solid #ddd;
+        width: 40px;
+        height: 40px;
+        border-radius: 4px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: 0.3s;
+        text-decoration: none;
+        color: inherit;
+       }
 
-        .btn-icon:hover {
-            background: #f0f0f0;
-            border-color: #999;
-        }
-
+      .btn-icon:hover,
+      a.btn-icon:hover {
+        background: #f0f0f0;
+        border-color: #999;
+       }
         .breadcrumb {
             font-size: 0.85rem;
             color: #666;
