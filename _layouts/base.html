@@ -20,12 +20,10 @@
         body, html { 
             height: 100%; 
             width: 100%; 
-            overflow: hidden;
-            background-color: var(--bg-green);
             font-family: 'Montserrat', sans-serif;
         }
 
-        /* SIDEBAR FIJO A LA IZQUIERDA */
+        /* SIDEBAR FIJO */
         .sidebar {
             width: var(--sidebar-width);
             height: 100vh;
@@ -42,6 +40,17 @@
             left: 0;
             top: 0;
             z-index: 100;
+            overflow-y: auto;
+            transition: transform 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        /* Ocultar sidebar en home hasta que se haga click en intro */
+        body.home-page .sidebar {
+            transform: translateX(-100%);
+        }
+
+        body.home-page.show-content .sidebar {
+            transform: translateX(0);
         }
 
         .sidebar::before {
@@ -130,72 +139,23 @@
             color: var(--accent);
         }
 
-        /* CONTENEDOR DE PÁGINAS A LA DERECHA DEL SIDEBAR */
-        .pages-container {
-            margin-left: var(--sidebar-width);
-            width: calc(100vw - var(--sidebar-width));
-            height: 100vh;
-            overflow: hidden;
-        }
-
-        .page-wrapper {
-            display: flex;
-            width: 200%;
-            height: 100vh;
-            transition: transform 0.8s cubic-bezier(0.23, 1, 0.32, 1);
-        }
-
-        body.view-content .page-wrapper {
-            transform: translateX(-50%);
-        }
-
-        /* PÁGINA INTRO */
-        .intro-page {
-            width: calc(100vw - var(--sidebar-width));
-            height: 100vh;
-            flex-shrink: 0;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            color: white;
-            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.5)), 
-                        url('https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&q=80');
-            background-size: cover;
-            background-position: center;
-            cursor: pointer;
-        }
-
-        .logo-ai { 
-            font-family: 'Libre Baskerville', serif;
-            font-size: 7rem;
-            font-style: italic;
-            border-bottom: 5px solid var(--accent);
-        }
-
-        .intro-page .subtitle {
-            letter-spacing: 12px;
-            margin-top: 20px;
-            font-size: 1.2rem;
-        }
-
-        .intro-page .hint {
-            margin-top: 60px;
-            font-size: 0.7rem;
-            letter-spacing: 3px;
-            opacity: 0.8;
-        }
-
-        /* PÁGINA DE CONTENIDO */
+        /* CONTENIDO */
         .main-content {
-            width: calc(100vw - var(--sidebar-width));
-            height: 100vh;
+            margin-left: var(--sidebar-width);
+            min-height: 100vh;
             background: white;
             padding: 80px 10%;
-            overflow-y: auto;
             color: #333;
-            flex-shrink: 0;
-            transition: background 0.3s, color 0.3s;
+            transition: background 0.3s, color 0.3s, margin-left 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        /* En home sin contenido visible, el main no tiene margen */
+        body.home-page .main-content {
+            margin-left: 0;
+        }
+
+        body.home-page.show-content .main-content {
+            margin-left: var(--sidebar-width);
         }
 
         body.dark-mode .main-content {
@@ -336,6 +296,47 @@
             color: #b8860b;
         }
 
+        /* INTRO PAGE (SOLO HOME) */
+        .intro-page {
+            margin-left: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.5)), 
+                        url('https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&q=80');
+            background-size: cover;
+            background-position: center;
+            cursor: pointer;
+        }
+
+        .logo-ai { 
+            font-family: 'Libre Baskerville', serif;
+            font-size: 7rem;
+            font-style: italic;
+            border-bottom: 5px solid var(--accent);
+        }
+
+        .intro-page .subtitle {
+            letter-spacing: 12px;
+            margin-top: 20px;
+            font-size: 1.2rem;
+        }
+
+        .intro-page .hint {
+            margin-top: 60px;
+            font-size: 0.7rem;
+            letter-spacing: 3px;
+            opacity: 0.8;
+        }
+
+        /* Ocultar intro cuando se hace click */
+        body.show-content .intro-page {
+            display: none;
+        }
+
         /* OVERLAY DE BÚSQUEDA */
         .search-overlay {
             position: fixed;
@@ -421,15 +422,21 @@
         /* RESPONSIVE */
         @media (max-width: 768px) {
             :root {
-                --sidebar-width: 280px;
+                --sidebar-width: 80px;
+            }
+
+            .sidebar {
+                padding: 20px 10px;
             }
             
             .logo-hy {
-                font-size: 3rem;
+                font-size: 2rem;
             }
 
-            .logo-ai {
-                font-size: 5rem;
+            .sidebar h2,
+            .sidebar .tagline,
+            .side-nav a span {
+                display: none;
             }
 
             .main-content {
@@ -442,7 +449,7 @@
         }
     </style>
 </head>
-<body id="app-body">
+<body id="app-body" {% if page.layout == 'home' %}class="home-page"{% endif %}>
 
     <!-- SIDEBAR FIJO -->
     <aside class="sidebar">
@@ -484,62 +491,55 @@
         </div>
     </aside>
 
-    <!-- CONTENEDOR DE PÁGINAS -->
-    <div class="pages-container">
-        <div class="page-wrapper">
-            
-            <!-- PÁGINA INTRO (SOLO EN HOME) -->
-            {% if page.layout == 'home' %}
-            <section class="intro-page" onclick="showContent()">
-                <div class="logo-ai">ai</div>
-                <p class="subtitle">{{ page.intro_subtitle | default: "AI4GREEN PROJECT" }}</p>
-                <p class="hint">{{ page.intro_hint | default: "CLICK OR SCROLL TO EXPLORE" }}</p>
-            </section>
-            {% endif %}
+    <!-- INTRO PAGE (SOLO EN HOME) -->
+    {% if page.layout == 'home' %}
+    <section class="intro-page" onclick="showContent()">
+        <div class="logo-ai">ai</div>
+        <p class="subtitle">{{ page.intro_subtitle | default: "AI4GREEN PROJECT" }}</p>
+        <p class="hint">{{ page.intro_hint | default: "CLICK OR SCROLL TO EXPLORE" }}</p>
+    </section>
+    {% endif %}
 
-            <!-- PÁGINA DE CONTENIDO -->
-            <main class="main-content">
-                <div class="content-header">
-                    <button class="btn-icon" onclick="window.location.href='{{ site.baseurl }}/'" title="Back to Home">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="2" class="icon-menu">
-                            <line x1="3" y1="6" x2="21" y2="6"></line>
-                            <line x1="3" y1="12" x2="21" y2="12"></line>
-                            <line x1="3" y1="18" x2="21" y2="18"></line>
-                        </svg>
-                    </button>
-                    <button class="btn-icon" onclick="toggleDarkMode()" title="Toggle Dark Mode">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="2" class="icon-theme">
-                            <circle cx="12" cy="12" r="5"></circle>
-                            <line x1="12" y1="1" x2="12" y2="3"></line>
-                            <line x1="12" y1="21" x2="12" y2="23"></line>
-                            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-                            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-                            <line x1="1" y1="12" x2="3" y2="12"></line>
-                            <line x1="21" y1="12" x2="23" y2="12"></line>
-                            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-                            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-                        </svg>
-                    </button>
-                    <button class="btn-icon" onclick="toggleSearch()" title="Search">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="2" class="icon-search">
-                            <circle cx="11" cy="11" r="8"></circle>
-                            <path d="m21 21-4.35-4.35"></path>
-                        </svg>
-                    </button>
-                </div>
-
-                {% if page.breadcrumb %}
-                <div class="breadcrumb">
-                    <a href="{{ site.baseurl }}/">HOME</a> / {{ page.breadcrumb }}
-                </div>
-                {% endif %}
-
-                {{ content }}
-
-            </main>
-
+    <!-- CONTENIDO -->
+    <main class="main-content">
+        <div class="content-header">
+            <button class="btn-icon" onclick="window.location.href='{{ site.baseurl }}/'" title="Back to Home">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="2" class="icon-menu">
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <line x1="3" y1="12" x2="21" y2="12"></line>
+                    <line x1="3" y1="18" x2="21" y2="18"></line>
+                </svg>
+            </button>
+            <button class="btn-icon" onclick="toggleDarkMode()" title="Toggle Dark Mode">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="2" class="icon-theme">
+                    <circle cx="12" cy="12" r="5"></circle>
+                    <line x1="12" y1="1" x2="12" y2="3"></line>
+                    <line x1="12" y1="21" x2="12" y2="23"></line>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                    <line x1="1" y1="12" x2="3" y2="12"></line>
+                    <line x1="21" y1="12" x2="23" y2="12"></line>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                </svg>
+            </button>
+            <button class="btn-icon" onclick="toggleSearch()" title="Search">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="2" class="icon-search">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <path d="m21 21-4.35-4.35"></path>
+                </svg>
+            </button>
         </div>
-    </div>
+
+        {% if page.breadcrumb %}
+        <div class="breadcrumb">
+            <a href="{{ site.baseurl }}/">HOME</a> / {{ page.breadcrumb }}
+        </div>
+        {% endif %}
+
+        {{ content }}
+
+    </main>
 
     <!-- OVERLAY DE BÚSQUEDA -->
     <div class="search-overlay" id="searchOverlay" onclick="closeSearchIfClickOutside(event)">
@@ -554,11 +554,7 @@
         const isHome = {{ page.layout == 'home' | jsonify }};
 
         function showContent() {
-            body.classList.add('view-content');
-        }
-
-        function showIntro() {
-            body.classList.remove('view-content');
+            body.classList.add('show-content');
         }
 
         // MODO OSCURO
@@ -602,47 +598,6 @@
                 if (searchOverlay.classList.contains('active')) {
                     toggleSearch();
                 }
-            }
-        });
-
-        // Auto-show content en páginas que no son home
-        if (!isHome) {
-            showContent();
-        }
-
-        // CONTROL DE SCROLL
-        let isScrolling = false;
-        window.addEventListener('wheel', (e) => {
-            if (isScrolling) return;
-            
-            const mainContent = document.querySelector('.main-content');
-            const isInContent = body.classList.contains('view-content');
-            
-            // Si estamos en el contenido y hay scroll vertical disponible, no cambiamos de vista
-            if (isInContent && Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
-                return;
-            }
-            
-            isScrolling = true;
-            setTimeout(() => isScrolling = false, 800);
-            
-            if ((e.deltaX > 10 || e.deltaY > 10) && !isInContent && isHome) {
-                showContent();
-            } else if ((e.deltaX < -10 || e.deltaY < -10) && isInContent && isHome) {
-                showIntro();
-            }
-        });
-
-        // Navegación por teclado (solo en home)
-        document.addEventListener('keydown', (e) => {
-            if (!isHome) return;
-            
-            const isInContent = body.classList.contains('view-content');
-            
-            if (e.key === 'ArrowRight' && !isInContent) {
-                showContent();
-            } else if (e.key === 'ArrowLeft' && isInContent) {
-                showIntro();
             }
         });
     </script>
