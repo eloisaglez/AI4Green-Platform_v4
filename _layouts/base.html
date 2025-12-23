@@ -434,16 +434,16 @@
             <main class="main-content">
                 <div class="content-header">
                     <!-- 
-                     <button class="btn-icon" onclick="{% if page.layout == 'home' %}showIntro(event){% else %}showMenu(event){% endif %}" title="Menu">
+                     <button class="btn-icon" onclick="{% if page.layout == 'home' %}showIntro(event){% else %}showMenu(event){% endif %}" title="Menu">   -->
+                      <a href="{{ site.baseurl }}/" class="btn-icon" title="Back to Home">
                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <line x1="3" y1="12" x2="21" y2="12"></line>
                             <line x1="3" y1="6" x2="21" y2="6"></line>
                             <line x1="3" y1="18" x2="21" y2="18"></line>
                         </svg>
-                    </button>
-                    -->
-                    <a href="{{ site.baseurl }}/" class="btn-icon" title="Back to Home">
-                    </a>
+                       </a>
+                   <!-- </button> -->
+                                    
                      <button class="btn-icon" title="Theme">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <circle cx="12" cy="12" r="5"></circle>
