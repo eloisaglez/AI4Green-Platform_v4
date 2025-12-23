@@ -491,9 +491,9 @@
         }
 
         function showMenu(e) {
-            if (e) e.preventDefault();
-            body.classList.add('view-menu');
-            body.classList.remove('view-content');
+           if (e) e.preventDefault();
+           // No hacemos nada en páginas que no son home
+           // El menú lateral ya está visible
         }
 
         // Auto-show content en páginas que no son home
