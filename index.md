@@ -1,7 +1,7 @@
 ---
 layout: home
 title: AI4Green Platform
-intro_subtitle: Empowering sustainability with IA
+intro_subtitle: Empowering sustainability with AI
 intro_hint: CLICK OR SCROLL TO EXPLORE
 ---
 
