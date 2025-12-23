@@ -389,6 +389,53 @@
             color: #999;
         }
 
+        .search-results {
+            margin-top: 20px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .search-result-item {
+            padding: 15px;
+            border-bottom: 1px solid #e0e0e0;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .search-result-item:hover {
+            background: #f5f5f5;
+        }
+
+        body.dark-mode .search-result-item {
+            border-bottom-color: #333;
+        }
+
+        body.dark-mode .search-result-item:hover {
+            background: #2a2a2a;
+        }
+
+        .search-result-title {
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 5px;
+        }
+
+        .search-result-excerpt {
+            font-size: 0.9rem;
+            color: #666;
+            line-height: 1.4;
+        }
+
+        body.dark-mode .search-result-excerpt {
+            color: #999;
+        }
+
+        .search-no-results {
+            text-align: center;
+            padding: 30px;
+            color: #999;
+        }
+
         .search-close {
             position: absolute;
             top: 20px;
@@ -537,13 +584,38 @@
     <div class="search-overlay" id="searchOverlay" onclick="closeSearchIfClickOutside(event)">
         <button class="search-close" onclick="toggleSearch()">×</button>
         <div class="search-box" onclick="event.stopPropagation()">
-            <input type="text" class="search-input" id="searchInput" placeholder="Type something..." autofocus>
+            <input type="text" class="search-input" id="searchInput" placeholder="Search in site..." oninput="performSearch()" autofocus>
+            <div class="search-results" id="searchResults"></div>
         </div>
     </div>
 
     <script>
         const body = document.getElementById('app-body');
         const isHome = {{ page.layout == 'home' | jsonify }};
+
+        // CONTENIDO DE LAS PÁGINAS PARA BÚSQUEDA
+        const searchablePages = [
+            {
+                title: "Home",
+                url: "{{ site.baseurl }}/",
+                content: "AI4GREEN PROJECT Empowering Sustainability with AI Erasmus+ partnership integrating AI and sustainability in STEAM education"
+            },
+            {
+                title: "Educational Materials",
+                url: "{{ site.baseurl }}/materials/",
+                content: "Discover our comprehensive collection of AI and sustainability resources designed for STEAM education. AI Fundamentals Introduction to Artificial Intelligence Learn the basics of AI machine learning and their applications in environmental science. Understanding AI concepts Machine learning basics AI ethics and responsible use Environmental applications. Python for AI Get started with Python programming for AI projects. Python basics Data analysis with pandas Visualization with matplotlib Introduction to scikit-learn. Sustainability Topics Climate Change AI Explore how AI can help us understand and combat climate change. Renewable Energy Learn how AI optimizes renewable energy systems. Biodiversity Conservation Discover AI applications in wildlife monitoring and ecosystem protection. Hands-on Projects Project 1 Weather Prediction Model Build your own weather forecasting system using machine learning. Project 2 Energy Consumption Analyzer Create a tool to analyze and optimize energy usage. Project 3 Waste Classification System Develop an AI-powered recycling assistant. Teacher Resources Lesson plans Assessment rubrics Student worksheets Presentation slides"
+            },
+            {
+                title: "Project",
+                url: "{{ site.baseurl }}/project/",
+                content: "AI4Green Project Erasmus+ Partnership 2024-2027 About the Project AI4Green is an innovative Erasmus+ partnership focused on integrating Artificial Intelligence and sustainability education in STEAM curricula across Europe. Our mission is to empower students and educators with the knowledge and tools to address environmental challenges using AI technologies. Project Goals Develop comprehensive AI and sustainability curriculum materials. Create hands-on learning experiences combining technology and environmental science. Foster international collaboration among students and teachers. Build digital competencies for the green transition. Promote critical thinking about AI ethics and environmental responsibility. Partner Countries Spain Lead Institution IES Diego Velázquez. France École Polytechnique Specialists in AI education and computational thinking. Italy Istituto Tecnico Focus on renewable energy and sustainable technologies. Expected Outcomes Open educational resources for AI in sustainability. Teacher training programs and workshops. Student exchange opportunities. Digital platform for collaborative learning. Case studies and best practices documentation"
+            },
+            {
+                title: "Team",
+                url: "{{ site.baseurl }}/team/",
+                content: "EcoAI Team Meet the educators researchers and innovators behind the AI4Green project. Project Coordinators IES Diego Velázquez Spain Lead Institution The Technology Department at IES Diego Velázquez brings expertise in STEAM education programming and environmental projects. Key Contributors Eloísa González Medina Technology Department Head Expert in Python Arduino and educational technology STEMadrid Network member. Partner Schools École Polytechnique France Specialists in AI education and computational thinking. Istituto Tecnico Italy Experts in renewable energy integration and sustainable engineering. Student Representatives Active participants in project development and testing. Contact Information For inquiries about the AI4Green project please contact us through our partner institutions or via the project coordination team"
+            }
+        ];
 
         function showContent() {
             body.classList.add('show-content');
@@ -565,12 +637,65 @@
         }
 
         // BÚSQUEDA
+        function performSearch() {
+            const query = document.getElementById('searchInput').value.toLowerCase().trim();
+            const resultsContainer = document.getElementById('searchResults');
+            
+            if (query.length < 2) {
+                resultsContainer.innerHTML = '';
+                return;
+            }
+
+            const results = searchablePages.filter(page => {
+                return page.title.toLowerCase().includes(query) || 
+                       page.content.toLowerCase().includes(query);
+            });
+
+            if (results.length === 0) {
+                resultsContainer.innerHTML = '<div class="search-no-results">No results found</div>';
+                return;
+            }
+
+            let html = '';
+            results.forEach(result => {
+                // Encontrar el contexto alrededor de la palabra encontrada
+                const contentLower = result.content.toLowerCase();
+                const index = contentLower.indexOf(query);
+                let excerpt = '';
+                
+                if (index !== -1) {
+                    const start = Math.max(0, index - 50);
+                    const end = Math.min(result.content.length, index + query.length + 50);
+                    excerpt = '...' + result.content.substring(start, end) + '...';
+                    
+                    // Resaltar la palabra buscada
+                    const regex = new RegExp(`(${query})`, 'gi');
+                    excerpt = excerpt.replace(regex, '<strong>$1</strong>');
+                } else {
+                    // Si no está en el contenido, mostrar el inicio
+                    excerpt = result.content.substring(0, 100) + '...';
+                }
+
+                html += `
+                    <div class="search-result-item" onclick="window.location.href='${result.url}'">
+                        <div class="search-result-title">${result.title}</div>
+                        <div class="search-result-excerpt">${excerpt}</div>
+                    </div>
+                `;
+            });
+
+            resultsContainer.innerHTML = html;
+        }
+
         function toggleSearch() {
             const searchOverlay = document.getElementById('searchOverlay');
             const searchInput = document.getElementById('searchInput');
+            const searchResults = document.getElementById('searchResults');
             
             if (searchOverlay.classList.contains('active')) {
                 searchOverlay.classList.remove('active');
+                searchInput.value = '';
+                searchResults.innerHTML = '';
             } else {
                 searchOverlay.classList.add('active');
                 setTimeout(() => searchInput.focus(), 100);
