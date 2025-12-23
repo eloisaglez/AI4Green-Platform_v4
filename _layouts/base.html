@@ -13,24 +13,6 @@
             --sidebar-width: 300px;
             --bg-green: #0a4f4f;
             --accent: #fec107;
-            
-            /* Colores para modo claro */
-            --content-bg: #ffffff;
-            --content-text: #333333;
-            --content-border: #e0e0e0;
-            --btn-border: #ddd;
-            --btn-hover-bg: #f0f0f0;
-            --btn-hover-border: #999;
-        }
-
-        body.dark-mode {
-            /* Colores para modo oscuro */
-            --content-bg: #1a1a1a;
-            --content-text: #e0e0e0;
-            --content-border: #333;
-            --btn-border: #444;
-            --btn-hover-bg: #2a2a2a;
-            --btn-hover-border: #666;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -229,11 +211,55 @@
 
         .main-content {
             width: calc(100vw - var(--sidebar-width));
-            background: var(--content-bg);
+            background: white;
             padding: 80px 10%;
             overflow-y: auto;
-            color: var(--content-text);
+            color: #333;
             transition: background 0.3s, color 0.3s;
+        }
+
+        /* MODO OSCURO */
+        body.dark-mode .main-content {
+            background: #1a1a1a;
+            color: #e0e0e0;
+        }
+
+        body.dark-mode .content-header {
+            border-bottom-color: #333;
+        }
+
+        body.dark-mode .btn-icon,
+        body.dark-mode a.btn-icon {
+            border-color: #444;
+        }
+
+        body.dark-mode .btn-icon:hover,
+        body.dark-mode a.btn-icon:hover {
+            background: #2a2a2a;
+            border-color: #666;
+        }
+
+        body.dark-mode .btn-icon svg,
+        body.dark-mode a.btn-icon svg {
+            stroke: #e0e0e0 !important;
+        }
+
+        body.dark-mode .breadcrumb {
+            color: #999;
+        }
+
+        body.dark-mode .breadcrumb a {
+            color: var(--accent);
+        }
+
+        body.dark-mode .main-content h1,
+        body.dark-mode .main-content h2,
+        body.dark-mode .main-content h3 {
+            color: #e0e0e0;
+        }
+
+        body.dark-mode .main-content a {
+            color: var(--accent);
         }
 
         .content-header {
@@ -241,13 +267,13 @@
             gap: 20px;
             margin-bottom: 40px;
             padding-bottom: 20px;
-            border-bottom: 1px solid var(--content-border);
+            border-bottom: 1px solid #e0e0e0;
         }
 
         .btn-icon,
         a.btn-icon {
             background: none;
-            border: 1px solid var(--btn-border);
+            border: 1px solid #ddd;
             width: 40px;
             height: 40px;
             border-radius: 4px;
@@ -257,23 +283,18 @@
             justify-content: center;
             transition: 0.3s;
             text-decoration: none;
-            color: var(--content-text) !important;
+            color: #333 !important;
         }
 
         .btn-icon:hover,
         a.btn-icon:hover {
-            background: var(--btn-hover-bg);
-            border-color: var(--btn-hover-border);
+            background: #f0f0f0;
+            border-color: #999;
         }
 
         .btn-icon svg,
         a.btn-icon svg {
             stroke: #333 !important;
-        }
-
-        body.dark-mode .btn-icon svg,
-        body.dark-mode a.btn-icon svg {
-            stroke: #e0e0e0 !important;
         }
 
         .breadcrumb {
@@ -346,7 +367,7 @@
             color: #b8860b;
         }
 
-        /* CUADRO DE BÚSQUEDA */
+        /* OVERLAY DE BÚSQUEDA */
         .search-overlay {
             position: fixed;
             top: 0;
@@ -369,22 +390,32 @@
         .search-box {
             width: 90%;
             max-width: 600px;
-            background: var(--content-bg);
+            background: white;
             border-radius: 8px;
             padding: 30px;
             box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+
+        body.dark-mode .search-box {
+            background: #1a1a1a;
         }
 
         .search-input {
             width: 100%;
             padding: 15px 20px;
             font-size: 1.2rem;
-            border: 2px solid var(--btn-border);
+            border: 2px solid #ddd;
             border-radius: 6px;
-            background: var(--content-bg);
-            color: var(--content-text);
+            background: white;
+            color: #333;
             font-family: 'Montserrat', sans-serif;
             transition: border-color 0.3s;
+        }
+
+        body.dark-mode .search-input {
+            background: #2a2a2a;
+            color: #e0e0e0;
+            border-color: #444;
         }
 
         .search-input:focus {
@@ -473,7 +504,7 @@
                         <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
                     </svg>
                 </a>
-                <a href="mailto:{{ site.author.email }}" aria-label="Email">
+                <a href="/cdn-cgi/l/email-protection#691212491a001d0c47081c1d01061b470c04080005491414" aria-label="Email">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
                         <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
                     </svg>
@@ -523,7 +554,7 @@
                             <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
                         </svg>
                     </a>
-                    <a href="mailto:{{ site.author.email }}" aria-label="Email">
+                    <a href="/cdn-cgi/l/email-protection#0d76762d7e647968236c787965627f2368606c64612d7070" aria-label="Email">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
                             <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
                         </svg>
@@ -587,11 +618,10 @@
         </div>
     </div>
 
-    <script>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
         const body = document.getElementById('app-body');
         const isHome = {{ page.layout == 'home' | jsonify }};
 
-        // FUNCIONES DE NAVEGACIÓN
         function showContent(e) {
             if (e) e.preventDefault();
             body.classList.remove('view-menu');
@@ -613,7 +643,6 @@
         // MODO OSCURO
         function toggleDarkMode() {
             body.classList.toggle('dark-mode');
-            // Guardar preferencia en localStorage
             if (body.classList.contains('dark-mode')) {
                 localStorage.setItem('darkMode', 'enabled');
             } else {
@@ -621,7 +650,7 @@
             }
         }
 
-        // Cargar preferencia de modo oscuro al iniciar
+        // Cargar preferencia de modo oscuro
         if (localStorage.getItem('darkMode') === 'enabled') {
             body.classList.add('dark-mode');
         }
@@ -704,7 +733,7 @@
                     if (isHome) {
                         showIntro();
                     } else {
-                        showMenu();
+                            showMenu();
                     }
                 } else if (!isInMenu) {
                     showMenu();
