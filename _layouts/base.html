@@ -297,8 +297,9 @@
             stroke: #333 !important;
         }
 
-        body.dark-mode .btn-icon svg,
-        body.dark-mode a.btn-icon svg {
+        body.dark-mode svg.icon-menu,
+        body.dark-mode svg.icon-theme,
+        body.dark-mode svg.icon-search {
             stroke: #e0e0e0 !important;
         }
 
@@ -574,15 +575,15 @@
 
             <main class="main-content">
                 <div class="content-header">
-                    <a href="{{ site.baseurl }}/" class="btn-icon" title="Back to Home">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <button class="btn-icon" onclick="window.location.href='{{ site.baseurl }}/'" title="Back to Home">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="2" class="icon-menu">
                             <line x1="3" y1="6" x2="21" y2="6"></line>
                             <line x1="3" y1="12" x2="21" y2="12"></line>
                             <line x1="3" y1="18" x2="21" y2="18"></line>
                         </svg>
-                    </a>
+                    </button>
                     <button class="btn-icon" onclick="toggleDarkMode()" title="Toggle Dark Mode">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="2" class="icon-theme">
                             <circle cx="12" cy="12" r="5"></circle>
                             <line x1="12" y1="1" x2="12" y2="3"></line>
                             <line x1="12" y1="21" x2="12" y2="23"></line>
@@ -595,7 +596,7 @@
                         </svg>
                     </button>
                     <button class="btn-icon" onclick="toggleSearch()" title="Search">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="2" class="icon-search">
                             <circle cx="11" cy="11" r="8"></circle>
                             <path d="m21 21-4.35-4.35"></path>
                         </svg>
