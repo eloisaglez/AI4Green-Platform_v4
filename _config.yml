@@ -1,11 +1,11 @@
 # --- INFORMACIÓN DEL SITIO ---
 title: AI4Green
 description: Empowering Sustainability with AI
-url: "https://eloisa.glez.github.io"
+url: "https://eloisaglez.github.io"
 baseurl: "/AI4Green-Platform_v4"
 
 # --- TEMA ---
-theme: jekyll-theme-hydejack
+theme: # jekyll-theme-hydejack
 # remote_theme: hydecorp/hydejack@v9 # Descomenta si usas remote_theme
 
 # --- CONFIGURACIÓN DEL AUTOR ---
@@ -58,7 +58,7 @@ hydejack:
 social:
   name: AI4Green
   links:
-    - https://github.com/eloisa-glez/AI4Green-Platform_v4
+    - https://github.com/eloisaglez/AI4Green-Platform_v4
 
 # --- CONFIGURACIÓN DE JEKYLL ---
 permalink: /:categories/:year-:month-:day-:title/
