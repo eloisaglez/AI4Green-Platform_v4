@@ -225,27 +225,28 @@
             border-bottom: 1px solid #e0e0e0;
         }
 
-       .btn-icon,
+        .btn-icon,
         a.btn-icon {
-        background: none;
-        border: 1px solid #ddd;
-        width: 40px;
-        height: 40px;
-        border-radius: 4px;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: 0.3s;
-        text-decoration: none;
-        color: inherit;
-       }
+            background: none;
+            border: 1px solid #ddd;
+            width: 40px;
+            height: 40px;
+            border-radius: 4px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.3s;
+            text-decoration: none;
+            color: #333;
+        }
 
-      .btn-icon:hover,
-      a.btn-icon:hover {
-        background: #f0f0f0;
-        border-color: #999;
-       }
+        .btn-icon:hover,
+        a.btn-icon:hover {
+            background: #f0f0f0;
+            border-color: #999;
+        }
+
         .breadcrumb {
             font-size: 0.85rem;
             color: #666;
@@ -438,13 +439,12 @@
                 <div class="content-header">
                     <a href="{{ site.baseurl }}/" class="btn-icon" title="Back to Home">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <line x1="3" y1="12" x2="21" y2="12"></line>
                             <line x1="3" y1="6" x2="21" y2="6"></line>
+                            <line x1="3" y1="12" x2="21" y2="12"></line>
                             <line x1="3" y1="18" x2="21" y2="18"></line>
                         </svg>
                     </a>
-                                    
-                     <button class="btn-icon" title="Theme">
+                    <button class="btn-icon" title="Theme">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <circle cx="12" cy="12" r="5"></circle>
                             <line x1="12" y1="1" x2="12" y2="3"></line>
@@ -457,7 +457,6 @@
                             <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
                         </svg>
                     </button>
-                  
                     <button class="btn-icon" title="Search">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <circle cx="11" cy="11" r="8"></circle>
@@ -496,9 +495,9 @@
         }
 
         function showMenu(e) {
-           if (e) e.preventDefault();
-           // No hacemos nada en páginas que no son home
-           // El menú lateral ya está visible
+            if (e) e.preventDefault();
+            body.classList.add('view-menu');
+            body.classList.remove('view-content');
         }
 
         // Auto-show content en páginas que no son home
