@@ -44,13 +44,9 @@
             transition: transform 0.8s cubic-bezier(0.23, 1, 0.32, 1);
         }
 
-        /* Ocultar sidebar en home hasta que se haga click en intro */
-        body.home-page .sidebar {
+        /* SOLO ocultar sidebar en home cuando NO se ha hecho click en intro */
+        body.home-page:not(.show-content) .sidebar {
             transform: translateX(-100%);
-        }
-
-        body.home-page.show-content .sidebar {
-            transform: translateX(0);
         }
 
         .sidebar::before {
@@ -149,13 +145,9 @@
             transition: background 0.3s, color 0.3s, margin-left 0.8s cubic-bezier(0.23, 1, 0.32, 1);
         }
 
-        /* En home sin contenido visible, el main no tiene margen */
-        body.home-page .main-content {
+        /* SOLO en home sin contenido visible, el main no tiene margen */
+        body.home-page:not(.show-content) .main-content {
             margin-left: 0;
-        }
-
-        body.home-page.show-content .main-content {
-            margin-left: var(--sidebar-width);
         }
 
         body.dark-mode .main-content {
