@@ -458,6 +458,41 @@
             background: rgba(255,255,255,0.2);
         }
 
+        /* BOTÓN SCROLL TO TOP */
+        .scroll-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: var(--accent);
+            color: #333;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            transition: all 0.3s;
+            z-index: 999;
+        }
+
+        .scroll-to-top.visible {
+            display: flex;
+        }
+
+        .scroll-to-top:hover {
+            background: #ffd740;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.4);
+        }
+
+        body.dark-mode .scroll-to-top {
+            color: #1a1a1a;
+        }
+
         /* RESPONSIVE */
         @media (max-width: 768px) {
             :root {
@@ -589,6 +624,11 @@
         </div>
     </div>
 
+    <!-- BOTÓN SCROLL TO TOP -->
+    <button class="scroll-to-top" id="scrollToTop" onclick="scrollToTop()" title="Back to top">
+        ↑
+    </button>
+
     <script>
         const body = document.getElementById('app-body');
         const isHome = {{ page.layout == 'home' | jsonify }};
@@ -717,6 +757,47 @@
                 }
             }
         });
+
+        // SCROLL TO TOP
+        const scrollToTopBtn = document.getElementById('scrollToTop');
+
+        // Mostrar/ocultar botón según scroll
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                scrollToTopBtn.classList.add('visible');
+            } else {
+                scrollToTopBtn.classList.remove('visible');
+            }
+        });
+
+        // También detectar scroll en .main-content (para páginas con contenido largo)
+        const mainContent = document.querySelector('.main-content');
+        if (mainContent) {
+            mainContent.addEventListener('scroll', () => {
+                if (mainContent.scrollTop > 300) {
+                    scrollToTopBtn.classList.add('visible');
+                } else {
+                    scrollToTopBtn.classList.remove('visible');
+                }
+            });
+        }
+
+        // Función para scroll suave hacia arriba
+        function scrollToTop() {
+            // Scroll en la ventana principal
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+
+            // Scroll en el contenido principal
+            if (mainContent) {
+                mainContent.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            }
+        }
     </script>
 </body>
 </html>
