@@ -458,8 +458,8 @@
             background: rgba(255,255,255,0.2);
         }
 
-        /* BOTÓN SCROLL TO TOP */
-        .scroll-to-top {
+        /* BOTÓN BACK TO TOP */
+        .back-to-top {
             position: fixed;
             bottom: 30px;
             right: 30px;
@@ -479,8 +479,46 @@
             z-index: 999;
         }
 
-        .scroll-to-top.visible {
+        .back-to-top.visible {
             display: flex;
+        }
+
+        .back-to-top:hover {
+            background: #ffcd38;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.4);
+        }
+
+        body.dark-mode .back-to-top {
+            color: #1a1a1a;
+        }
+
+        /* BOTÓN SCROLL TO TOP */
+        .scroll-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: var(--accent);
+            color: #333;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;  /* Cambiado de none a flex para que siempre se vea */
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            transition: all 0.3s;
+            z-index: 999;
+            opacity: 0;  /* Añadido para transición suave */
+            visibility: hidden;
+        }
+
+        .scroll-to-top.visible {
+            opacity: 1;
+            visibility: visible;
         }
 
         .scroll-to-top:hover {
@@ -624,8 +662,8 @@
         </div>
     </div>
 
-    <!-- BOTÓN SCROLL TO TOP -->
-    <button class="scroll-to-top" id="scrollToTop" onclick="scrollToTop()" title="Back to top">
+    <!-- BOTÓN BACK TO TOP -->
+    <button class="back-to-top" id="backToTop" onclick="scrollToTop()" title="Back to top">
         ↑
     </button>
 
@@ -759,11 +797,11 @@
         });
 
         // SCROLL TO TOP
-        const scrollToTopBtn = document.getElementById('scrollToTop');
+        const scrollToTopBtn = document.getElementById('backToTop');
 
         // Mostrar/ocultar botón según scroll
         window.addEventListener('scroll', () => {
-            if (window.pageYOffset > 300) {
+            if (window.pageYOffset > 100) {
                 scrollToTopBtn.classList.add('visible');
             } else {
                 scrollToTopBtn.classList.remove('visible');
@@ -774,7 +812,7 @@
         const mainContent = document.querySelector('.main-content');
         if (mainContent) {
             mainContent.addEventListener('scroll', () => {
-                if (mainContent.scrollTop > 300) {
+                if (mainContent.scrollTop > 100) {
                     scrollToTopBtn.classList.add('visible');
                 } else {
                     scrollToTopBtn.classList.remove('visible');
